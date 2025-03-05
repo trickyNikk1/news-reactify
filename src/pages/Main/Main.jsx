@@ -46,6 +46,7 @@ export const Main = () => {
     }
   }
 
+
   useEffect(() => {
     const controller = new AbortController()
     fetchCategories(controller.signal)
