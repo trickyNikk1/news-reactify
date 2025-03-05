@@ -24,6 +24,10 @@
     color: #6b4eff
 }
 
+.item {
+    cursor: pointer;
+}
+
 ::-webkit-scrollbar {
     display: none;
 }

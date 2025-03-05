@@ -39,7 +39,7 @@ export const Main = () => {
     try{
       setIsLoading(true)
       const response = await getCategories(signal)
-      setCategories('All', ...response.categories)
+      setCategories(['All', ...response.categories])
     }
     catch (error) {
       console.error(error)
