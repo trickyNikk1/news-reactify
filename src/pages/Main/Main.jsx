@@ -20,7 +20,6 @@ export const Main = () => {
           setIsLoading(true)
           const response = await getNews(controller.signal, pageSize, currentPage)
           setNews(response.news)
-          setIsLoading(false)
         }
         catch (error) {
           console.error(error)
