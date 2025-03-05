@@ -6,6 +6,8 @@ import { NewsList } from "../../components/NewsList/NewsList"
 import { Skeleton } from "../../components/Skeleton/Skeleton"
 import { Pagination } from "../../components/Pagination/Pagination"
 import { Categories } from "../../components/Categories/Categories"
+import { Search } from "../../components/Search/Search"
+import { useDebounce } from "../../hooks/useDebounce"
 
 export const Main = () => {
   const [news, setNews] = useState([])
@@ -13,13 +15,21 @@ export const Main = () => {
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [isLoading, setIsLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
+  const [keywords, setKeywords] = useState('')
   const totalPages = 10
   const pageSize = 10
+  const debouncedKeywords = useDebounce(keywords, 1500)
 
   const fetchNews = async (signal, currentPage) => {
     try{
       setIsLoading(true)
-      const response = await getNews({signal, page_size: pageSize, page_number: currentPage, category: selectedCategory === 'All' ? null : selectedCategory})
+      const response = await getNews({
+        signal, 
+        page_size: pageSize, 
+        page_number: currentPage, 
+        category: selectedCategory === 'All' ? null : selectedCategory,
+        keywords: debouncedKeywords,
+      })
       setNews(response.news)
     }
     catch (error) {
@@ -33,13 +43,13 @@ export const Main = () => {
     return () => {
       controller.abort()
     }
-  }, [currentPage, selectedCategory])
+  }, [currentPage, selectedCategory, debouncedKeywords])
   
   const fetchCategories = async (signal) => {
     try{
       setIsLoading(true)
       const response = await getCategories(signal)
-      setCategories('All', ...response.categories)
+      setCategories(['All', ...response.categories])
     }
     catch (error) {
       console.error(error)
@@ -73,7 +83,12 @@ export const Main = () => {
 
   return (
     <main className={styles.main}>
-      <Categories categories={categories} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}/>
+      <Categories 
+        categories={categories} 
+        selectedCategory={selectedCategory} 
+        setSelectedCategory={setSelectedCategory}
+      />
+      <Search keywords={keywords} setKeywords={setKeywords}/>
       {news.length > 0 && !isLoading ? <NewsBanner item={news[0]}/> : <Skeleton type={'banner'} count={1} />}
       <Pagination
         currentPage={currentPage}
