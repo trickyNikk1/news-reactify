@@ -9,6 +9,7 @@ import { Pagination } from "../../components/Pagination/Pagination"
 export const Main = () => {
     const [news, setNews] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    
     const [currentPage, setCurrentPage] = useState(1)
     const totalPages = 10
     const pageSize = 10
@@ -20,6 +21,7 @@ export const Main = () => {
           setIsLoading(true)
           const response = await getNews(controller.signal, pageSize, currentPage)
           setNews(response.news)
+          setIsLoading(false)
         }
         catch (error) {
           console.error(error)
