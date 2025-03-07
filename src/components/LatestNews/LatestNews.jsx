@@ -1,6 +1,6 @@
 import { getLatestNews } from '../../api/apiNews'
 import { useFetch } from '../../helpers/hooks/useFetch'
-import { BannersListWithSkeleton as BannersList } from '../BannersList/BannersList'
+import { BannersListSetContent as BannersList } from '../BannersList/BannersList'
 import styles from './styles.module.css'
 
 export const LatestNews = () => {
@@ -8,7 +8,7 @@ export const LatestNews = () => {
 
   return (
     <section className={styles.section}>
-      <BannersList banners={data && data.news} isLoading={isLoading}/>
+      <BannersList banners={data && data.news} isLoading={isLoading} error={error}/>
     </section>
   )
 }
