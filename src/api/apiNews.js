@@ -19,6 +19,18 @@ export const getNews = async ({ page_number = 1, page_size = 10, category = 'All
     throw new Error(`Oops! something went wrong... ${error.message}`)
   }
 }
+export const getLatestNews = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}latest-news`, {
+      params: {
+        apiKey: API_KEY,
+      },
+    })
+    return response.data
+  } catch (error) {
+    throw new Error(`Oops! something went wrong... ${error.message}`)
+  }
+}
 
 export const getCategories = async () => {
   try {
