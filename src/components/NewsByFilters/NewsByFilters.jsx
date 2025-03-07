@@ -1,5 +1,5 @@
 import styles from './styles.module.css'
-import { NewsListWithSkeleton as NewsList } from '../NewsList/NewsList'
+import { NewsListSetContent as NewsList } from '../NewsList/NewsList'
 import { PAGE_SIZE, TOTAL_PAGES } from '../../constants/constants'
 import { NewsFilters } from '../NewsFilters/NewsFilters'
 import { useFilters } from '../../helpers/hooks/useFilters'
@@ -52,7 +52,7 @@ export const NewsByFilters = () => {
         handlePreviousPage={handlePreviousPage}
         handlePageClick={handlePageClick}
       >
-        <NewsList news={data?.news} isLoading={isLoading}/>
+        <NewsList news={data?.news} isLoading={isLoading} error={error}/>
       </PaginationWrapper>
     </section>
   )
