@@ -2,7 +2,7 @@ import { setContent } from '../../helpers/hocs/setContent'
 import { withSkeleton } from '../../helpers/hocs/withSkeleton'
 import { NewsItem } from '../NewsItem/NewsItem'
 import styles from './styles.module.css'
-const NewsList = ({news}) => {
+export const NewsList = ({news}) => {
     return (
       <ul className={styles.list}>
         {news.map(item => {
