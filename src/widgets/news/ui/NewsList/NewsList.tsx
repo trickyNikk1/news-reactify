@@ -1,19 +1,22 @@
-import { INews, NewsItem } from '@/entities/news'
+import { INews } from '@/entities/news'
 import { setContent } from '@/shared/hocs/setContent'
 import styles from './styles.module.css'
+import { NewsCard } from '@/entities/news'
 
 interface Props {
-  news: INews[]
+  news?: INews[]
+  type?: 'banner' | 'item'
+  direction?: 'row' | 'column'
 }
 
-export const NewsList = ({ news }: Props) => {
+export const NewsList = ({ news, type = 'item' }: Props) => {
   return (
-    <ul className={styles.list}>
+    <ul className={`${type === 'item' ? styles.items : styles.banners}`}>
       {news?.map((item) => {
-        return <NewsItem item={item} key={item.id} />
+        return <NewsCard item={item} key={item.id} type={type} />
       })}
     </ul>
   )
 }
 
-export const NewsListSetContent = setContent(NewsList, 'item', 10)
+export const NewsListSetContent = setContent<Props>(NewsList, 10)
